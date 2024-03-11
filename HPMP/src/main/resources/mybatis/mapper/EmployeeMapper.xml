@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="com.HPMP.domain.employee.mapper.EmployeeMapper">
+
+	<select id="getEmployeeList"
+		resultType="com.HPMP.domain.employee.EmployeeDto">
+		SELECT
+		*
+		FROM
+		EMPLOYEE_PJU_MST
+		WHERE DEL_YN = 'N'
+	</select>
+	
+<!-- 	<insert id="insertEmployee" 
+	parameterType="com.HPMP.domain.employee.EmployeeDto">
+	INSERT INTO
+	
+	
+	
+	</insert> -->
+</mapper>
+

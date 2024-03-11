@@ -1,0 +1,59 @@
+#header {
+	display: flex;
+}
+
+#header-left {
+	text-align: right;
+	float: left;
+	width: 50%;
+}
+
+#header-right {
+	margin-top:10px;
+	margin-right: 10px;
+	text-align: right;
+	float: right;
+	width: 50%;
+}
+
+input{
+	outline: none;
+	border-width: 0;
+	border-width: 0 0 0px;
+}
+
+#combobox{
+	width: 10px;
+	height: 5px;
+
+}
+
+
+
+table.type01 {
+	border-style: solid;
+	border-color: black;
+	border-width: 2px; 
+	border-collapse : collapse;
+	text-align: left;
+	line-height: 1.5;
+	margin: 20px 10px;
+	white-space: pre;
+	border-collapse: collapse;
+}
+
+table.type01 th {
+	background-color: lightgray; width : 150px;
+	padding: 10px;
+	font-weight: bold;
+	vertical-align: top;
+	border: 1px solid #ccc;
+	width: 150px;
+}
+
+table.type01 td {
+	width: 350px;
+	padding: 10px;
+	vertical-align: top;
+	border: 1px solid #ccc;
+}
