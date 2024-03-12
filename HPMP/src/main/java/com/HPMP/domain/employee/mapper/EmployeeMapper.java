@@ -12,6 +12,6 @@ public interface EmployeeMapper {
 	
 	public List<EmployeeDto> getEmployeeList();
 	
+	public void insertEmployee(EmployeeDto employeeDto);
 	
-
 }

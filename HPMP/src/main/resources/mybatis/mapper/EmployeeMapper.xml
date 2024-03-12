@@ -1,24 +1,63 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper
-	namespace="com.HPMP.domain.employee.mapper.EmployeeMapper">
+<mapper namespace="com.HPMP.domain.employee.mapper.EmployeeMapper">
+	<sql id="employeeColumns">
+		employee_no,
+		employee_nm,
+		hp_no,
+		email,
+		entr_dt,
+		retr_dt,
+		wrk_typ_cd,
+		del_yn,
+		base_adr,
+		dtl_adr,
+		zip_no,
+		birth_dt,
+		rank_nm,
+		pstn_nm,
+		reg_id,
+		reg_dtm,
+		mod_id,
+		mod_dtm
+	</sql>
 
-	<select id="getEmployeeList"
-		resultType="com.HPMP.domain.employee.EmployeeDto">
+
+
+	<select id="getEmployeeList" resultType="EmployeeDto">
 		SELECT
-		*
+			<include refid="employeeColumns"/>
 		FROM
-		EMPLOYEE_PJU_MST
-		WHERE DEL_YN = 'N'
+			EMPLOYEE_PJU_MST
+		WHERE 
+			del_yn = 'N'
 	</select>
 	
-<!-- 	<insert id="insertEmployee" 
-	parameterType="com.HPMP.domain.employee.EmployeeDto">
-	INSERT INTO
-	
-	
-	
-	</insert> -->
+	<insert id="insertEmployee" parameterType="EmployeeDto">
+		
+		INSERT INTO EMPLOYEE_PJU_MST(
+				<include refid="employeeColumns"/>)
+		VALUES (
+			(SELECT 'E'||TO_CHAR(TO_CHAR(SYSDATE,'YYYY')||NVL(TO_CHAR(MAX(SUBSTR(EMPLOYEE_NO,6))), '0000') +1)FROM EMPLOYEE_PJU_MST),
+			#{employeeNm},
+			#{hpNo},
+			#{email},
+			TO_CHAR(SYSDATE,'YYYYMMDD'),
+			#{retrDt},
+			#{wrkTypCd},
+			'N',
+			#{baseAdr},
+			#{dtlAdr},
+			#{zipNo},
+			#{birthDt},
+			#{rankNm},
+			#{pstnNm},
+			#{regId},
+			TO_CHAR(SYSDATE,'YYYYMMDDHH24MISS'),
+			#{modId},
+			TO_CHAR(SYSDATE,'YYYYMMDDHH24MISS')
+			)	
+	</insert>
 </mapper>
 

@@ -3,11 +3,15 @@
 <configuration>
 	<settings>
 		<setting name="cacheEnabled" value="true" /> <!-- mybatis cache 사용여부 -->
-		<setting name="lazyLoadingEnabled" value="true" />	<!-- 지연로딩 사용여부  -->
-		<setting name="multipleResultSetsEnabled" value="false" /> <!-- 한 개의 구문에서 여러 개의 Result를 허용할지 여부-->
+		<setting name="lazyLoadingEnabled" value="true" />	<!-- 지연로딩 사용여부 -->
+		<setting name="multipleResultSetsEnabled" value="false" /> <!-- 한 개의 구문에서 여러 개의 Result를 허용할지 여부 -->
 		<setting name="defaultExecutorType" value="SIMPLE" /> <!-- 디폴트 Executor 설정 (SIMPLE은 특별히 동작 x -->
 		<setting name="jdbcTypeForNull" value="VARCHAR" />	<!-- mybatis로 넘어오는 parameter가 null인 경우 jdbcType을 Setting -->
-		<setting name="mapUnderscoreToCamelCase" value="true"/> <!-- 카멜 케이스 VO 매핑 -->  
-		<setting name="callSettersOnNulls" value="true"/> <!-- 쿼리 결과 필드가 null인 경우, 누락이 되서 나오지 않게 설정-->
+		<setting name="mapUnderscoreToCamelCase" value="true" /> <!-- 카멜 케이스 VO 매핑 -->
+		<setting name="callSettersOnNulls" value="true" /> <!-- 쿼리 결과 필드가 null인 경우, 누락이 되서 나오지 않게 설정 -->
 	</settings>
+
+	<typeAliases>
+		<typeAlias type="com.HPMP.domain.employee.EmployeeDto" alias="EmployeeDto" />
+	</typeAliases>
 </configuration>

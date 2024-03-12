@@ -19,4 +19,8 @@ public class EmployeeService {
 		return employeeMapper.getEmployeeList();
 	}
 	
+	public void insertEmployee(EmployeeDto employeeDto) {
+		employeeMapper.insertEmployee(employeeDto);
+	}
+	
 }

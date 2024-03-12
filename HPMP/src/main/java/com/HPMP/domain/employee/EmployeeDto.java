@@ -1,10 +1,12 @@
 package com.HPMP.domain.employee;
 
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
+@Data
 public class EmployeeDto {
 	/** 직원번호 */
 	private String employeeNo;
