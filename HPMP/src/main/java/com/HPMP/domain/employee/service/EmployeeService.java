@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.HPMP.domain.employee.EmployeeDto;
+import com.HPMP.domain.employee.EmployeeDao;
 import com.HPMP.domain.employee.mapper.EmployeeMapper;
 
 import lombok.RequiredArgsConstructor;
@@ -15,11 +15,11 @@ public class EmployeeService {
 	
 	private final EmployeeMapper employeeMapper;
 	
-	public List<EmployeeDto> getEmployeeList(){
+	public List<EmployeeDao> getEmployeeList(){
 		return employeeMapper.getEmployeeList();
 	}
 	
-	public void insertEmployee(EmployeeDto employeeDto) {
+	public void insertEmployee(EmployeeDao employeeDto) {
 		employeeMapper.insertEmployee(employeeDto);
 	}
 	

@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.HPMP.domain.employee.EmployeeDto;
+import com.HPMP.domain.employee.EmployeeDao;
 import com.HPMP.domain.employee.service.EmployeeService;
 
 import lombok.RequiredArgsConstructor;
@@ -25,12 +25,12 @@ public class EmployeeRestController {
 	private final EmployeeService employeeService;
 
 	@GetMapping("/employeeList")
-	public List<EmployeeDto> employeeList() {
+	public List<EmployeeDao> employeeList() {
 		return employeeService.getEmployeeList();
 	}
 
 	@PostMapping("/employee")
-	public ResponseEntity<String> insertEmployee(@RequestBody EmployeeDto employeeDto) {
+	public ResponseEntity<String> insertEmployee(@RequestBody EmployeeDao employeeDto) {
 		employeeService.insertEmployee(employeeDto);
 
 		return new ResponseEntity<String>("INSERT SUCCESS", HttpStatus.OK);

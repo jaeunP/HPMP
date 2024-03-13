@@ -25,16 +25,19 @@
 
 
 
-	<select id="getEmployeeList" resultType="EmployeeDto">
+	<select id="getEmployeeList" resultType="EmployeeDao">
 		SELECT
 			<include refid="employeeColumns"/>
 		FROM
 			EMPLOYEE_PJU_MST
 		WHERE 
 			del_yn = 'N'
+		ORDER BY
+			employee_no DESC
+			
 	</select>
 	
-	<insert id="insertEmployee" parameterType="EmployeeDto">
+	<insert id="insertEmployee" parameterType="EmployeeDao">
 		
 		INSERT INTO EMPLOYEE_PJU_MST(
 				<include refid="employeeColumns"/>)
@@ -43,7 +46,7 @@
 			#{employeeNm},
 			#{hpNo},
 			#{email},
-			TO_CHAR(SYSDATE,'YYYYMMDD'),
+			#{entrDt},
 			#{retrDt},
 			#{wrkTypCd},
 			'N',

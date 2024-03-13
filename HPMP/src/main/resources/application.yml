@@ -10,3 +10,9 @@ mybatis:
   mapper-locations: classpath:mybatis/mapper/*.xml
   config-location: classpath:mybatis-config.xml
 
+logging:
+  level:
+    jdbc: 
+      sqlonly: off
+      sqltiming: debug
+      resulttesttable: debug

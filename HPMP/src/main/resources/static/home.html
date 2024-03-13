@@ -7,27 +7,9 @@
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/vue@2.6.0"></script>
+<script src="./js/home.js"></script>
 
 <title>인사관리</title>
-
-<script>
-	$(function() {
-		let employeeLists = new Vue({
-			el : "#employees",
-			data : {
-				employeeList : {}
-			}
-		})
-		$.ajax({
-			type : "GET",
-			url : "api/employeeList",
-			success : function(response) {
-				console.dir(response);
-				employeeLists.employeeList = response;
-			}
-		})
-	})
-</script>
 
 </head>
 <body>
@@ -41,71 +23,40 @@
 		</div>
 
 		<div id="header-right">
-			<button>신규</button>
-			<button>삭제</button>
-			<button>저장</button>
+			<button id="insert-btn">신규</button>
+			<button id="delete-btn">삭제</button>
+			<button id="save-btn">저장</button>
 		</div>
 
 	</div>
-	<div>
+	<div id="search-table">
 		<table class="type01">
 			<tr class="gray">
 				<th>직원번호</th>
-				<td>자동채번</td>
+				<td></td>
+				
 				<th>직원이름</th>
-				<td><input type="text" name="st_name"></td>
-
+				<td></td>
+				
 				<th>휴대폰번호</th>
-				<td><input type="text" name="st_name"></td>
-
+				<td></td>
+				
 				<th>입사일자</th>
-				<td><input type="date" name="st_name"></td>
+				<td></td>
+				
 			</tr>
 			<tr>
 				<th>근무형태</th>
-				<td><select name="language" id="select">
-						<option value="none">=== 선택 ===</option>
-						<option value="휴가">휴가</option>
-						<option value="파견">파견</option>
-				</select></td>
-
-				<th>이메일</th>
-				<td><input type="text" name="st_name"></td>
-
-				<th>퇴사여부</th>
-				<td><select name="language" id="select">
-						<option value="no">N</option>
-						<option value="yes">Y</option>
-				</select></td>
-				<th>퇴사일자</th>
-				<td><input type="date" name="st_name"></td>
-			</tr>
-			<tr>
-				<th>직급이름</th>
-				<td><input type="text" name="st_name"></td>
-
-				<th>직책이름</th>
-				<td><input type="text" name="st_name"></td>
-
-				<th>기본주소</th>
-				<td><input type="text" name="st_name"></td>
-
-				<th>상세주소</th>
-				<td><input type="text" name="st_name"></td>
-			</tr>
-			<tr>
-				<th>우편번호</th>
-				<td><input type="text" name="st_name"></td>
-
-
-				<th>생년월일</th>
-				<td><input type="text" name="st_name"></td>
-
-				<th>등록자</th>
-				<td><input type="text" name="st_name"></td>
-
-				<th>수정자</th>
-				<td><input type="text" name="st_name"></td>
+				<td></td>
+				
+				<th>삭제여부</th>
+				<td></td>
+				
+				<th></th>
+				<td></td>
+				
+				<th></th>
+				<td></td>
 			</tr>
 		</table>
 	</div>
@@ -117,7 +68,7 @@
 		<table class="type01">
 			<thead>
 				<tr class="gray">
-					<th>NO</th>
+					<th>No</th>
 					<th>이름</th>
 					<th>휴대폰 번호</th>
 					<th>이메일</th>
@@ -137,24 +88,48 @@
 				</tr>
 			</thead>
 			<tbody id="employees">
+				<tr id="insert-row" style="display: none;">
+					<td></td>
+					<td><input type="text" id="employee-nm"></td>
+					<td><input type="text" id="hp-no"></td>
+					<td><input type="text" id="email"></td>
+					<td><input type="date" id="entr-dt"></td>
+					<td><input type="text" id="rank-nm"></td>
+					<td><input type="text" id="pstn-nm"></td>
+					<td><select name="language" id="wrk-typ-cd">
+							<option value="">=== 선택 ===</option>
+							<option value="EC1">EC1 : 본사출근</option>
+							<option value="EC2">EC2 : 휴가</option>
+							<option value="EC3">EC3 : 파견</option>
+					</select></td>
+					<td><input type="date" id="retr-dt"></td>
+					<td><input type="text" id="base-adr"></td>
+					<td><input type="text" id="dtl-adr"></td>
+					<td><input type="text" id="zip-no"></td>
+					<td><input type="text" id="birth-dt"></td>
+					<td><input type="text" id="reg-id"></td>
+					<td>  </td>
+					<td><input type="text" id="mod-id"></td>
+					<td>  </td>
+				</tr>
 				<tr class="gray" v-for="index in employeeList">
-					<th><span>{{index.employeeNo}}</span></th>
-					<th><span>{{index.employeeNm}}</span></th>
-					<th><span>{{index.hpNo}}</span></th>
-					<th><span>{{index.email}}</span></th>
-					<th><span>{{index.entrDt}}</span></th>
-					<th><span>{{index.rankNm}}</span></th>
-					<th><span>{{index.pstnNm}}</span></th>
-					<th><span>{{index.wrkTypCd}}</span></th>
-					<th><span>{{index.employeeretrDt}}</span></th>
-					<th><span>{{index.baseAdr}}</span></th>
-					<th><span>{{index.dtlAdr}}</span></th>
-					<th><span>{{index.zipNo}}</span></th>
-					<th><span>{{index.birthDt}}</span></th>
-					<th><span>{{index.regId}}</span></th>
-					<th><span>{{index.regDtm}}</span></th>
-					<th><span>{{index.modId}}</span></th>
-					<th><span>{{index.modDtm}}</span></th>
+					<td>{{index.employeeNo}}</td>
+					<td>{{index.employeeNm}}</td>
+					<td>{{index.hpNo}}</td>
+					<td>{{index.email}}</td>
+					<td>{{index.entrDt}}</td>
+					<td>{{index.rankNm}}</td>
+					<td>{{index.pstnNm}}</td>
+					<td>{{index.wrkTypCd}}</td>
+					<td>{{index.employeeretrDt}}</td>
+					<td>{{index.baseAdr}}</td>
+					<td>{{index.dtlAdr}}</td>
+					<td>{{index.zipNo}}</td>
+					<td>{{index.birthDt}}</td>
+					<td>{{index.regId}}</td>
+					<td>{{index.regDtm}}</td>
+					<td>{{index.modId}}</td>
+					<td>{{index.modDtm}}</td>
 			</tbody>
 		</table>
 	</div>
