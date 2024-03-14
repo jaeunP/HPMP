@@ -25,7 +25,7 @@
 
 
 
-	<select id="getEmployeeList" resultType="EmployeeDao">
+	<select id="getEmployeeList" resultType="EmployeeDto">
 		SELECT
 			<include refid="employeeColumns"/>
 		FROM
@@ -37,7 +37,7 @@
 			
 	</select>
 	
-	<insert id="insertEmployee" parameterType="EmployeeDao">
+	<insert id="insertEmployee" parameterType="EmployeeDto">
 		
 		INSERT INTO EMPLOYEE_PJU_MST(
 				<include refid="employeeColumns"/>)
@@ -62,5 +62,13 @@
 			TO_CHAR(SYSDATE,'YYYYMMDDHH24MISS')
 			)	
 	</insert>
+	
+	<update id="deleteEmployeeAtView" parameterType="String">
+		UPDATE EMPLOYEE_PJU_MST 
+		SET	
+			del_yn  = 'Y',
+			mod_dtm  = TO_CHAR(SYSDATE,'YYYYMMDDHH24MISS')
+		WHERE employee_no  = #{employeeNo}
+	</update>
 </mapper>
 

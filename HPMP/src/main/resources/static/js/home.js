@@ -1,3 +1,35 @@
+//신규 버튼 클릭 시 테이블 노출
+$(function() {
+	$('#insert-btn').click(function(){
+		$('#insert-row').show();
+
+	})	
+})
+
+$(function() {
+	$('#data-table tr').click(function() {
+		var clickTdAll = $(this).text().split(" ");
+		const clickEmployeeNo = clickTdAll[0]
+			
+		console.log("클릭한 Row의 td 값 배열:" + clickTdAll);
+			
+		console.log("클릭한 Row의 EmployyeNo :" + clickEmployeeNo);
+		})
+})
+
+//삭제 버튼 클릭 시 열 추가
+$(function() {
+	$('#delete-btn').click(function(){
+		$('#data-table tr').click(function() {
+			var clickTdAll = $(this).text().split(" ");
+			const clickEmployeeNo = clickTdAll[0]
+			
+			console.log("클릭한 Row의 td 값 배열:" + clickTdAll);
+			
+			console.log("클릭한 Row의 EmployyeNo :" + clickEmployeeNo);
+		})
+	})
+})
 
 //직원 목록 전체 조회
 $(function() {
@@ -17,14 +49,6 @@ $(function() {
 	})
 })
 
-//클릭 시 테이블 노출
-$(function() {
-	$('#insert-btn').click(function(){
-		$('#insert-row').show();
-
-	})	
-})
-
 //직원 등록
 $(function(){
 	$('#save-btn').click(function (){
@@ -35,9 +59,6 @@ $(function(){
 		
 		let retrDt = $('#retr-dt').val();
 		let retrDtFormat = retrDt.replace(/\-/g,'');
-		
-
-
 		
 		let employee = {
 			employeeNm: $('#employee-nm').val(),

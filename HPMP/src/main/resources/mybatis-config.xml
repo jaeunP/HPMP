@@ -12,6 +12,6 @@
 	</settings>
 
 	<typeAliases>
-		<typeAlias type="com.HPMP.domain.employee.EmployeeDao" alias="EmployeeDao" />
+		<typeAlias type="com.HPMP.domain.employee.EmployeeDto" alias="EmployeeDto" />
 	</typeAliases>
 </configuration>

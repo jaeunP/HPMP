@@ -3,15 +3,17 @@ package com.HPMP.domain.employee.mapper;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
-import org.springframework.stereotype.Repository;
 
-import com.HPMP.domain.employee.EmployeeDao;
+import com.HPMP.domain.employee.EmployeeDto;
+
 
 @Mapper
 public interface EmployeeMapper {
 	
-	public List<EmployeeDao> getEmployeeList();
+	public List<EmployeeDto> getEmployeeList();
 	
-	public void insertEmployee(EmployeeDao employeeDto);
+	public void insertEmployee(EmployeeDto employeeDto);
+	
+	public int deleteEmployeeAtView(String employeeNo);
 	
 }

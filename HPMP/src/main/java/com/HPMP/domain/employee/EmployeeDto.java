@@ -1,9 +1,13 @@
 package com.HPMP.domain.employee;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Getter
-public class EmployeeDao {
+@Setter
+@NoArgsConstructor
+public class EmployeeDto {
 	/** 직원번호 */
 	private String employeeNo;
 	
@@ -57,6 +61,5 @@ public class EmployeeDao {
 	
 	/** 수정일시 */
 	private String modDtm;
-
 	
 }

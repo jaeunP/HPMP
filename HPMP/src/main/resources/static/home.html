@@ -65,9 +65,9 @@
 		<h3>직원 목록</h3>
 	</div>
 	<div>
-		<table class="type01">
+		<table class="type01" id="data-table">
 			<thead>
-				<tr class="gray">
+				<tr>
 					<th>No</th>
 					<th>이름</th>
 					<th>휴대폰 번호</th>
@@ -113,23 +113,23 @@
 					<td>  </td>
 				</tr>
 				<tr class="gray" v-for="index in employeeList">
-					<td>{{index.employeeNo}}</td>
-					<td>{{index.employeeNm}}</td>
-					<td>{{index.hpNo}}</td>
-					<td>{{index.email}}</td>
-					<td>{{index.entrDt}}</td>
-					<td>{{index.rankNm}}</td>
-					<td>{{index.pstnNm}}</td>
-					<td>{{index.wrkTypCd}}</td>
-					<td>{{index.employeeretrDt}}</td>
-					<td>{{index.baseAdr}}</td>
-					<td>{{index.dtlAdr}}</td>
-					<td>{{index.zipNo}}</td>
-					<td>{{index.birthDt}}</td>
-					<td>{{index.regId}}</td>
-					<td>{{index.regDtm}}</td>
-					<td>{{index.modId}}</td>
-					<td>{{index.modDtm}}</td>
+					<td class="employee-no">{{index.employeeNo}}</td>
+					<td class="employee-nm">{{index.employeeNm}}</td>
+					<td class="hp-no">{{index.hpNo}}</td>
+					<td class="email">{{index.email}}</td>
+					<td class="entr-dt">{{index.entrDt}}</td>
+					<td class="rank-nm">{{index.rankNm}}</td>
+					<td class="pstn-nm">{{index.pstnNm}}</td>
+					<td class="wrk-typ-cd">{{index.wrkTypCd}}</td>
+					<td class="retr-dt">{{index.retrDt}}</td>
+					<td class="base-adr">{{index.baseAdr}}</td>
+					<td class="dtl-adr">{{index.dtlAdr}}</td>
+					<td class="zip-no">{{index.zipNo}}</td>
+					<td class="birth-dt">{{index.birthDt}}</td>
+					<td class="reg-id">{{index.regId}}</td>
+					<td class="reg-dtm">{{index.regDtm}}</td>
+					<td class="mod-id">{{index.modId}}</td>
+					<td class="mod-dtm">{{index.modDtm}}</td>
 			</tbody>
 		</table>
 	</div>

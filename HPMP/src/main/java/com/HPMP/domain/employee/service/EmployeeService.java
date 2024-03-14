@@ -3,8 +3,9 @@ package com.HPMP.domain.employee.service;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import com.HPMP.domain.employee.EmployeeDao;
+import com.HPMP.domain.employee.EmployeeDto;
 import com.HPMP.domain.employee.mapper.EmployeeMapper;
 
 import lombok.RequiredArgsConstructor;
@@ -15,12 +16,20 @@ public class EmployeeService {
 	
 	private final EmployeeMapper employeeMapper;
 	
-	public List<EmployeeDao> getEmployeeList(){
+	public List<EmployeeDto> getEmployeeList(){
 		return employeeMapper.getEmployeeList();
 	}
 	
-	public void insertEmployee(EmployeeDao employeeDto) {
+	@Transactional
+	public void insertEmployee(EmployeeDto employeeDto) {
 		employeeMapper.insertEmployee(employeeDto);
+	}
+	
+	
+	public int deleteEmployeeAtView(String employeeNo) {
+		int deleteCnt = employeeMapper.deleteEmployeeAtView(employeeNo);
+		
+		return deleteCnt;
 	}
 	
 }
