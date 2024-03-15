@@ -14,6 +14,6 @@ public interface EmployeeMapper {
 	
 	public void insertEmployee(EmployeeDto employeeDto);
 	
-	public int deleteEmployeeAtView(String employeeNo);
+	public int deleteEmployeeAtView(List<EmployeeDto> employeeNo);
 	
 }

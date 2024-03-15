@@ -26,7 +26,8 @@ public class EmployeeService {
 	}
 	
 	
-	public int deleteEmployeeAtView(String employeeNo) {
+	@Transactional
+	public int deleteEmployeeAtView(List<EmployeeDto> employeeNo) {
 		int deleteCnt = employeeMapper.deleteEmployeeAtView(employeeNo);
 		
 		return deleteCnt;

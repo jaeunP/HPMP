@@ -6,7 +6,7 @@ $(function() {
 	})	
 })
 
-$(function() {
+/*$(function() {
 	$('#data-table tr').click(function() {
 		var clickTdAll = $(this).text().split(" ");
 		const clickEmployeeNo = clickTdAll[0]
@@ -16,18 +16,54 @@ $(function() {
 		console.log("클릭한 Row의 EmployyeNo :" + clickEmployeeNo);
 		})
 })
-
+*/
 //삭제 버튼 클릭 시 열 추가
 $(function() {
 	$('#delete-btn').click(function(){
-		$('#data-table tr').click(function() {
+		$('#save-btn').hide();
+		$('#patch-save-btn').show();
+		
+		const employeeNoSet = new Set();
+		
+		
+		$('#data-table tr').unbind("click").bind("click",function() {
+			$(this).css("background-color", "#FF9090");
+			
+			
 			var clickTdAll = $(this).text().split(" ");
-			const clickEmployeeNo = clickTdAll[0]
+			var clickEmployeeNo = clickTdAll[0];
 			
-			console.log("클릭한 Row의 td 값 배열:" + clickTdAll);
+			employeeNoSet.add(clickEmployeeNo);
 			
-			console.log("클릭한 Row의 EmployyeNo :" + clickEmployeeNo);
+			console.log("클릭한 Row의 EmployeeNo :" + clickEmployeeNo);
+			
 		})
+
+
+		
+		$('#patch-save-btn').click(function () {
+			const employeeNoArr = Array.from(employeeNoSet);
+			let employee = new Map;
+			for(var i=0; i<employeeNoArr.length; i++){
+				employee["employeeNo"] = employeeNoArr[i];
+			}
+			
+			console.log("-------------"+JSON.stringify(employee))
+			$.ajax({
+				type: "PATCH",
+				url: "/api/employees",
+				data: JSON.stringify(employee),
+				success : function(response) {
+					alter("사원이 삭제되었습니다.");
+				location.href="/";
+				},
+				error: function(data) {
+					console.log(data);
+				}
+			})
+		})
+		
+				
 	})
 })
 

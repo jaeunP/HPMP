@@ -37,6 +37,15 @@
 			
 	</select>
 	
+	<select id="getEmployee" resultType="EmployeeDto">
+		SELECT
+			<include refid="employeeColumns"/>
+		FROM
+			EMPLOYEE_PJU_MST
+		WHERE
+			employee_no = #{employeeNm}
+	</select>
+	
 	<insert id="insertEmployee" parameterType="EmployeeDto">
 		
 		INSERT INTO EMPLOYEE_PJU_MST(
@@ -63,12 +72,26 @@
 			)	
 	</insert>
 	
-	<update id="deleteEmployeeAtView" parameterType="String">
+<!-- 	<update id="deleteEmployeeAtView" parameterType="String">
 		UPDATE EMPLOYEE_PJU_MST 
 		SET	
 			del_yn  = 'Y',
 			mod_dtm  = TO_CHAR(SYSDATE,'YYYYMMDDHH24MISS')
 		WHERE employee_no  = #{employeeNo}
+	</update> -->
+	
+	<update id="deleteEmployeeAtView" parameterType="List">
+		<foreach collection="list" item="employee" separator=";" open="DECLARE BEGIN" close="; END;">
+			UPDATE 
+				EMPLOYEE_PJU_MST 
+			SET	
+				del_yn  = 'Y',
+				mod_dtm  = TO_CHAR(SYSDATE,'YYYYMMDDHH24MISS')
+			WHERE employee_no  = #{employee.employeeNo}
+		</foreach>
+
 	</update>
+	
+	
 </mapper>
 
