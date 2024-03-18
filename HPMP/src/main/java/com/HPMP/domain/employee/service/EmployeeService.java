@@ -20,9 +20,14 @@ public class EmployeeService {
 		return employeeMapper.getEmployeeList();
 	}
 	
+	public List<EmployeeDto> searchEmployee(EmployeeDto employeeDto) {
+		return employeeMapper.searchEmployee(employeeDto);
+	}
+	
 	@Transactional
 	public void insertEmployee(EmployeeDto employeeDto) {
 		employeeMapper.insertEmployee(employeeDto);
+		
 	}
 	
 	

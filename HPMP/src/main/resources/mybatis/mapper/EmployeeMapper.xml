@@ -3,48 +3,46 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.HPMP.domain.employee.mapper.EmployeeMapper">
 	<sql id="employeeColumns">
-		employee_no,
-		employee_nm,
-		hp_no,
-		email,
-		entr_dt,
-		retr_dt,
-		wrk_typ_cd,
-		del_yn,
-		base_adr,
-		dtl_adr,
-		zip_no,
-		birth_dt,
-		rank_nm,
-		pstn_nm,
-		reg_id,
-		reg_dtm,
-		mod_id,
-		mod_dtm
+		EMPLOYEE_NO,
+		EMPLOYEE_NM,
+		HP_NO,
+		EMAIL,
+		ENTR_DT,
+		RETR_DT,
+		WRK_TYP_CD,
+		DEL_YN,
+		BASE_ADR,
+		DTL_ADR,
+		ZIP_NO,
+		BIRTH_DT,
+		RANK_NM,
+		PSTN_NM,
+		REG_ID,
+		REG_DTM,
+		MOD_ID,
+		MOD_DTM
 	</sql>
 	
 	<sql id="viewemployeeColumns">
-		employee_no,
-		employee_nm,
-		hp_no,
-		email,
-		TO_CHAR(TO_DATE(entr_dt), 'YYYY-MM-DD') AS "entr_dt",
-		TO_CHAR(TO_DATE(retr_dt), 'YYYY-MM-DD') AS "retr_dt",
-		wrk_typ_cd,
-		del_yn,
-		base_adr,
-		dtl_adr,
-		zip_no,
-		TO_CHAR(TO_DATE(birth_dt), 'YYYY-MM-DD') AS "birth_dt",
-		rank_nm,
-		pstn_nm,
-		reg_id,
-		TO_CHAR(TO_DATE(reg_dtm, 'YYYY-MM-DD HH24:MI:SS'), 'YYYY-MM-DD HH24:MI:SS') AS "reg_dtm",
-		mod_id,
-		TO_CHAR(TO_DATE(mod_dtm, 'YYYY-MM-DD HH24:MI:SS'), 'YYYY-MM-DD HH24:MI:SS') AS "mod_dtm"
+		EMPLOYEE_NO,
+		EMPLOYEE_NM,
+		HP_NO,
+		EMAIL,
+		TO_CHAR(TO_DATE(ENTR_DT), 'YYYY-MM-DD') AS "ENTR_DT",
+		TO_CHAR(TO_DATE(RETR_DT), 'YYYY-MM-DD') AS "RETR_DT",
+		WRK_TYP_CD,
+		DEL_YN,
+		BASE_ADR,
+		DTL_ADR,
+		ZIP_NO,
+		TO_CHAR(TO_DATE(BIRTH_DT), 'YYYY-MM-DD') AS "BIRTH_DT",
+		RANK_NM,
+		PSTN_NM,
+		REG_ID,
+		TO_CHAR(TO_DATE(REG_DTM, 'YYYY-MM-DD HH24:MI:SS'), 'YYYY-MM-DD HH24:MI:SS') AS "REG_DTM",
+		MOD_ID,
+		TO_CHAR(TO_DATE(MOD_DTM, 'YYYY-MM-DD HH24:MI:SS'), 'YYYY-MM-DD HH24:MI:SS') AS "MOD_DTM"
 	</sql>
-
-
 
 	<select id="getEmployeeList" resultType="EmployeeDto">
 		SELECT
@@ -52,19 +50,19 @@
 		FROM
 			EMPLOYEE_PJU_MST
 		WHERE 
-			del_yn = 'N'
+			DEL_YN = 'N'
 		ORDER BY
-			employee_no DESC
+			EMPLOYEE_NO DESC
 			
 	</select>
 	
-	<select id="getEmployee" resultType="EmployeeDto">
+	<select id="searchEmployee" resultType="EmployeeDto" parameterType="EmployeeDto">
 		SELECT
-			<include refid="employeeColumns"/>
+			<include refid="viewemployeeColumns"/>
 		FROM
 			EMPLOYEE_PJU_MST
 		WHERE
-			employee_no = #{employeeNm}
+			EMPLOYEE_NM LIKE #{employeeNm}||'%'
 	</select>
 	
 	<insert id="insertEmployee" parameterType="EmployeeDto">
@@ -93,26 +91,18 @@
 			)	
 	</insert>
 	
-<!-- 	<update id="deleteEmployeeAtView" parameterType="String">
-		UPDATE EMPLOYEE_PJU_MST 
-		SET	
-			del_yn  = 'Y',
-			mod_dtm  = TO_CHAR(SYSDATE,'YYYYMMDDHH24MISS')
-		WHERE employee_no  = #{employeeNo}
-	</update> -->
-	
 	<update id="deleteEmployeeAtView" parameterType="List">
 		<foreach collection="list" item="employee" separator=";" open="DECLARE BEGIN" close="; END;">
 			UPDATE 
 				EMPLOYEE_PJU_MST 
 			SET	
-				del_yn  = 'Y',
-				mod_dtm  = TO_CHAR(SYSDATE,'YYYYMMDDHH24MISS')
-			WHERE employee_no  = #{employee.employeeNo}
+				DEL_YN  = 'Y',
+				MOD_DTM  = TO_CHAR(SYSDATE,'YYYYMMDDHH24MISS')
+			WHERE
+				EMPLOYEE_NO  = #{employee.employeeNo}
 		</foreach>
 
 	</update>
-	
-	
+		
 </mapper>
 

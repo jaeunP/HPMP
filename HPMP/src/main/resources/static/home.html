@@ -23,6 +23,7 @@
 		</div>
 
 		<div id="header-right">
+			<button id="search-btn">조회</button>
 			<button id="insert-btn">신규</button>
 			<button id="delete-btn">삭제</button>
 			<button id="save-btn">저장</button>
@@ -34,24 +35,33 @@
 		<table class="type01">
 			<tr class="gray">
 				<th>직원번호</th>
-				<td></td>
+				<td><input type="text" id="search-employee-no"></td>
 				
 				<th>직원이름</th>
-				<td></td>
+				<td><input type="text" id="search-employee-nm"></td>
 				
 				<th>휴대폰번호</th>
-				<td></td>
+				<td><input type="text" id="hp-no"></td>
 				
 				<th>입사일자</th>
-				<td></td>
+				<td><input type="date" id="search-entr-dt"></td>
 				
 			</tr>
 			<tr>
 				<th>근무형태</th>
-				<td></td>
+				<td><select name="language" id="search-wrk-typ-cd">
+							<option value="">=== 선택 ===</option>
+							<option value="EC1">EC1 : 본사출근</option>
+							<option value="EC2">EC2 : 휴가</option>
+							<option value="EC3">EC3 : 파견</option>
+				</select></td>
 				
 				<th>삭제여부</th>
-				<td></td>
+				<td><select name="language" id="search-del-yn">
+							<option value="">=== 선택 ===</option>
+							<option value="Y">Y</option>
+							<option value="N">N</option>
+				</select></td>
 				
 				<th></th>
 				<td></td>

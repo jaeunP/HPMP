@@ -12,6 +12,8 @@ public interface EmployeeMapper {
 	
 	public List<EmployeeDto> getEmployeeList();
 	
+	public List<EmployeeDto> searchEmployee(EmployeeDto employeeDto); 
+	
 	public void insertEmployee(EmployeeDto employeeDto);
 	
 	public int deleteEmployeeAtView(List<EmployeeDto> employeeNo);
