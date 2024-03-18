@@ -1,4 +1,4 @@
-//신규 버튼 클릭 시 테이블 노출
+//신규 버튼 클릭시 열 생성
 $(function() {
 	$('#insert-btn').click(function(){
 		$('#insert-row').show();
@@ -6,18 +6,8 @@ $(function() {
 	})	
 })
 
-/*$(function() {
-	$('#data-table tr').click(function() {
-		var clickTdAll = $(this).text().split(" ");
-		const clickEmployeeNo = clickTdAll[0]
-			
-		console.log("클릭한 Row의 td 값 배열:" + clickTdAll);
-			
-		console.log("클릭한 Row의 EmployyeNo :" + clickEmployeeNo);
-		})
-})
-*/
-//삭제 버튼 클릭 시 열 추가
+
+//삭제 버튼 클릭 이벤트
 $(function() {
 	$('#delete-btn').click(function(){
 		$('#save-btn').hide();
@@ -29,41 +19,33 @@ $(function() {
 		$('#data-table tr').unbind("click").bind("click",function() {
 			$(this).css("background-color", "#FF9090");
 			
-			
 			var clickTdAll = $(this).text().split(" ");
 			var clickEmployeeNo = clickTdAll[0];
 			
-			employeeNoSet.add(clickEmployeeNo);
-			
-			console.log("클릭한 Row의 EmployeeNo :" + clickEmployeeNo);
-			
+			employeeNoSet.add(clickEmployeeNo);	
 		})
 
-
-		
 		$('#patch-save-btn').click(function () {
-			const employeeNoArr = Array.from(employeeNoSet);
-			let employee = new Map;
-			for(var i=0; i<employeeNoArr.length; i++){
-				employee["employeeNo"] = employeeNoArr[i];
+			var employeeNoArr = Array.from(employeeNoSet);
+			var employee = new Array();
+			
+			for(var i = 0; i<employeeNoArr.length; i++){
+				var employeeObj = new Object();
+				employeeObj.employeeNo = employeeNoArr[i];
+				employee.push(employeeObj)
 			}
 			
-			console.log("-------------"+JSON.stringify(employee))
 			$.ajax({
 				type: "PATCH",
 				url: "/api/employees",
 				data: JSON.stringify(employee),
-				success : function(response) {
-					alter("사원이 삭제되었습니다.");
+				contentType: "application/json",
+				success: function (){
+					alert("사원이 삭제되었습니다.");
 				location.href="/";
-				},
-				error: function(data) {
-					console.log(data);
 				}
 			})
-		})
-		
-				
+		})			
 	})
 })
 
@@ -89,12 +71,13 @@ $(function() {
 $(function(){
 	$('#save-btn').click(function (){
 		let entrDt = $('#entr-dt').val();
-		console.log('entrDt: ', entrDt);
 		let entrDtFormat = entrDt.replace(/\-/g,'');
-		console.log('entrDtFormat :', entrDtFormat);
 		
 		let retrDt = $('#retr-dt').val();
 		let retrDtFormat = retrDt.replace(/\-/g,'');
+		
+		let birthDt = $('#birth-dt').val();
+		let birthDtFormat = birthDt.replace(/\-/g,'');
 		
 		let employee = {
 			employeeNm: $('#employee-nm').val(),
@@ -106,7 +89,7 @@ $(function(){
 			baseAdr: $('#base-adr').val(),
 			dtlAdr: $('#dtl-adr').val(),
 			zipNo: $('#zip-no').val(),
-			birthDt: $('#birth-dt').val(),
+			birthDt: birthDtFormat,
 			rankNm: $('#rank-nm').val(),
 			pstnNm: $('#pstn-nm').val(),
 			regId: $('#reg-id').val(),

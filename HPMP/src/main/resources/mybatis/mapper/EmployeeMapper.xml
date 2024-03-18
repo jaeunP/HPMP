@@ -22,12 +22,33 @@
 		mod_id,
 		mod_dtm
 	</sql>
+	
+	<sql id="viewemployeeColumns">
+		employee_no,
+		employee_nm,
+		hp_no,
+		email,
+		TO_CHAR(TO_DATE(entr_dt), 'YYYY-MM-DD') AS "entr_dt",
+		TO_CHAR(TO_DATE(retr_dt), 'YYYY-MM-DD') AS "retr_dt",
+		wrk_typ_cd,
+		del_yn,
+		base_adr,
+		dtl_adr,
+		zip_no,
+		TO_CHAR(TO_DATE(birth_dt), 'YYYY-MM-DD') AS "birth_dt",
+		rank_nm,
+		pstn_nm,
+		reg_id,
+		TO_CHAR(TO_DATE(reg_dtm, 'YYYY-MM-DD HH24:MI:SS'), 'YYYY-MM-DD HH24:MI:SS') AS "reg_dtm",
+		mod_id,
+		TO_CHAR(TO_DATE(mod_dtm, 'YYYY-MM-DD HH24:MI:SS'), 'YYYY-MM-DD HH24:MI:SS') AS "mod_dtm"
+	</sql>
 
 
 
 	<select id="getEmployeeList" resultType="EmployeeDto">
 		SELECT
-			<include refid="employeeColumns"/>
+			<include refid="viewemployeeColumns"/>
 		FROM
 			EMPLOYEE_PJU_MST
 		WHERE 
