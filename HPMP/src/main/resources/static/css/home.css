@@ -9,33 +9,30 @@
 }
 
 #header-right {
-	margin-top:10px;
+	margin-top: 10px;
 	margin-right: 10px;
 	text-align: right;
 	float: right;
 	width: 50%;
 }
 
-input{
+input {
 	width: 100%;
 	outline: none;
 	border-width: 0;
 	border-width: 0 0 0px;
 }
 
-#combobox{
+#combobox {
 	width: 10px;
 	height: 5px;
-
 }
-
-
 
 table.type01 {
 	border-style: solid;
 	border-color: black;
-	border-width: 2px; 
-	border-collapse : collapse;
+	border-width: 2px;
+	border-collapse: collapse;
 	text-align: left;
 	line-height: 1.5;
 	margin: 20px 10px;
@@ -45,7 +42,8 @@ table.type01 {
 
 table.type01 th {
 	text-align: center;
-	background-color: lightgray; width : 150px;
+	background-color: lightgray;
+	width: 150px;
 	padding: 10px;
 	font-weight: bold;
 	vertical-align: top;
@@ -60,6 +58,10 @@ table.type01 td {
 	border: 1px solid #ccc;
 }
 
-#insert-table {
-	display: flex;
+#data-table tr:nth-child(2n+3) {
+	background-color: #E1E1E1;
+}
+
+#search-table tr:nth-child(2n) {
+	background-color: #E1E1E1;
 }

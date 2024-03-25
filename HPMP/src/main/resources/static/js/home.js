@@ -24,32 +24,59 @@ $(function() {
 	})
 })
 
-//직원 등록
-/*$(function(){
+//직원 검색
+$(function(){
 	$('#search-btn').click(function (){
 		let entrDt = $('#search-entr-dt').val();
 		let entrDtFormat = entrDt.replace(/\-/g,'');
 		
+		let SearchEmployeeLists = new Vue({
+		el : "#SearchEmployees",
+		data : {
+			SearchEmployeeList : {}
+		}
+	})	
+		let hpNo = $('#search-hp-no').val();
+		if(hpNo == ''){
+			hpNo = null;
+		}
+		let wrkTypCd = $('#search-wrk-typ-cd').val();
+		
+		if(wrkTypCd == ''){
+			wrkTypCd = null;
+		}
+		
+		
 		let employee = {
 			employeeNo: $('#search-employee-no').val(),
 			employeeNm: $('#search-employee-nm').val(),
-			hpNo: $('#"search-hp-no"').val(),
+			hpNo: hpNo,
 			entrDt: entrDtFormat,
-			wrkTypCd: $('#search-wrk-typ-cd').val(),
-			delYn: $('search-del-yn').val()
+			wrkTypCd: wrkTypCd,
+			delYn: $('#search-del-yn').val()
 			};
+			let copiedList = Object.assign({}, SearchEmployeeLists);
+			
 			$.ajax({
 				type: "POST",
-				url: "/api/searchResult",
+				url: "api/searchResult",
 				data: JSON.stringify(employee),
 				contentType: "application/json",
-				success: function (){
-					alert("검색완료");
-				location.href="/";
+				success : function(response) {
+					$('#data-table').hide();
+					$('#search-table').show();
+					console.dir(response);
+					SearchEmployeeLists.$forceUpdate();
+					SearchEmployeeLists.SearchEmployeeList = response;
+					SearchEmployeeLists.$forceUpdate();
+					//SearchEmployeeLists.SearchemployeeList.splice(0, response);
+					alert("검색되었습니다.");
+
+
 			}
 		})
 	})
-})*/
+})
 
 
 
@@ -150,4 +177,6 @@ $(document).on('keyup', '#zip-no', function() {
     $(this).val($(this).val().replace(/[^0-9]/g, ''));
 });
 
-
+$(document).on('keyup', '#search-hp-no', function() {
+    $(this).val($(this).val().replace(/[^0-9]/g, ''));
+});

@@ -29,7 +29,7 @@ public class EmployeeApiController {
 		return employeeService.getEmployeeList();
 	}
 	
-	@GetMapping("/searchResult")
+	@PostMapping("/searchResult")
 	public List<EmployeeDto> searchEmployee(@RequestBody EmployeeDto employeeDto) {
 		return employeeService.searchEmployee(employeeDto);
 	}

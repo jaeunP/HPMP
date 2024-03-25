@@ -1,4 +1,4 @@
-package com.HPMP.controller;
+package com.HPMP.viewcontroller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

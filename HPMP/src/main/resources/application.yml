@@ -1,7 +1,11 @@
 spring:
   datasource:
-    driver-class-name: oracle.jdbc.driver.OracleDriver
-    url: jdbc:oracle:thin:@192.168.0.101:1521/xe?allowMultiQueries=true
+#    driver-class-name: oracle.jdbc.OracleDriver
+#    url: jdbc:oracle:thin:@192.168.0.101:1521/xe?allowMultiQueries=true
+#    username: eco_fresh
+#    password: eco1505!
+    driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
+    url: jdbc:log4jdbc:oracle:thin:@192.168.0.101:1521/xe?allowMultiQueries=true
     username: eco_fresh
     password: eco1505!
     
@@ -15,6 +19,9 @@ mybatis:
 logging:
   level:
     jdbc: 
-      sqlonly: off
-      sqltiming: debug
-      resulttesttable: debug
+      sqlonly: INFO
+      sqltiming: OFF
+      resulttesttable: OFF
+      audit: OFF
+      resultset: OFF
+      connectcion: OFF

@@ -31,7 +31,7 @@
 		</div>
 
 	</div>
-	<div id="search-table">
+	<div id="search-div">
 		<table class="type01">
 			<tr class="gray">
 				<th>직원번호</th>
@@ -41,7 +41,7 @@
 				<td><input type="text" id="search-employee-nm"></td>
 				
 				<th>휴대폰번호</th>
-				<td><input type="text" id="hp-no"></td>
+				<td><input type="text" id="search-hp-no"></td>
 				
 				<th>입사일자</th>
 				<td><input type="date" id="search-entr-dt"></td>
@@ -124,6 +124,51 @@
 					<td>  </td>
 				</tr>
 				<tr class="gray" v-for="index in employeeList">
+					<td class="employee-no">{{index.employeeNo}}</td>
+					<td class="employee-nm">{{index.employeeNm}}</td>
+					<td class="hp-no">{{index.hpNo}}</td>
+					<td class="email">{{index.email}}</td>
+					<td class="entr-dt">{{index.entrDt}}</td>
+					<td class="rank-nm">{{index.rankNm}}</td>
+					<td class="pstn-nm">{{index.pstnNm}}</td>
+					<td class="wrk-typ-cd">{{index.wrkTypCd}}</td>
+					<td class="retr-dt">{{index.retrDt}}</td>
+					<td class="base-adr">{{index.baseAdr}}</td>
+					<td class="dtl-adr">{{index.dtlAdr}}</td>
+					<td class="zip-no">{{index.zipNo}}</td>
+					<td class="birth-dt">{{index.birthDt}}</td>
+					<td class="reg-id">{{index.regId}}</td>
+					<td class="reg-dtm">{{index.regDtm}}</td>
+					<td class="mod-id">{{index.modId}}</td>
+					<td class="mod-dtm">{{index.modDtm}}</td>
+			</tbody>
+		</table>
+	</div>
+	<div>
+		<table class="type01" id="search-table" style="display: none;">
+			<thead>
+				<tr>
+					<th>No</th>
+					<th>이름</th>
+					<th>휴대폰 번호</th>
+					<th>이메일</th>
+					<th>입사일자</th>
+					<th>직급</th>
+					<th>직책</th>
+					<th>근무형태코드</th>
+					<th>퇴사일자</th>
+					<th>기본주소</th>
+					<th>상세주소</th>
+					<th>우편번호</th>
+					<th>생년월일</th>
+					<th>등록자</th>
+					<th>등록일시</th>
+					<th>수정자</th>
+					<th>수정일시</th>
+				</tr>
+			</thead>
+			<tbody id="SearchEmployees">
+				<tr class="gray" v-for="index in SearchEmployeeList">
 					<td class="employee-no">{{index.employeeNo}}</td>
 					<td class="employee-nm">{{index.employeeNm}}</td>
 					<td class="hp-no">{{index.hpNo}}</td>

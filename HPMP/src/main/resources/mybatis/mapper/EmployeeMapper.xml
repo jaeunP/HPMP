@@ -62,7 +62,19 @@
 		FROM
 			EMPLOYEE_PJU_MST
 		WHERE
-			EMPLOYEE_NM LIKE #{employeeNm}||'%'
+			EMPLOYEE_NO LIKE #{employeeNo}||'%'
+			AND EMPLOYEE_NM LIKE #{employeeNm}||'%'
+			AND EMAIL LIKE #{email}||'%'
+			AND ENTR_DT LIKE #{entrDt}||'%'
+			AND DEL_YN LIKE #{delYn}||'%'
+			<if test="hpNo != null">
+				AND HP_NO LIKE #{hpNo}||'%'
+			</if>
+			<if test="wrkTypCd != null">
+				AND WRK_TYP_CD LIKE #{wrkTypCd}||'%'
+			</if>
+		ORDER BY
+			EMPLOYEE_NO DESC
 	</select>
 	
 	<insert id="insertEmployee" parameterType="EmployeeDto">
