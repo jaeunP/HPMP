@@ -18,6 +18,7 @@ public class EmployeeDto {
 	
 	/** 직원이름 */
 	@NotBlank(message = "직원이름이 존재하지 않습니다.")
+	@Pattern(regexp = "^[ㄱ-ㅎ가-힣a-zA-Z]*$", message = "한글, 영문만 입력 가능합니다.")
 	private String employeeNm;
 	
 	/** 직원휴대폰번호 */

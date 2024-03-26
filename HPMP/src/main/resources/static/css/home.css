@@ -1,9 +1,58 @@
+input {
+	width: 100%;
+	outline: none;
+	border-width: 0;
+	border-width: 0 0 0px;
+}
+
+h3 {
+	margin-left: 15px
+}
+
+table {
+	border-style: solid;
+	border-color: black;
+	border-width: 2px;
+	border-collapse: collapse;
+	text-align: left;
+	line-height: 1.5;
+	margin: 20px 10px;
+	white-space: pre;
+	border-collapse: collapse;
+}
+
+table th {
+	text-align: center;
+	background-color: lightgray;
+	width: 150px;
+	padding: 10px;
+	font-weight: bold;
+	vertical-align: top;
+	border: 1px solid #ccc;
+	width: 150px;
+}
+
+table td {
+	width: 350px;
+	padding: 10px;
+	vertical-align: top;
+	border: 1px solid #ccc;
+}
+
+table.dynamic-table tr:nth-child(2n+3) {
+	background-color: #E1E1E1;
+}
+
+.delete-click {
+	background: #FF9090 !important;
+}
+
 #header {
 	display: flex;
 }
 
 #header-left {
-	text-align: right;
+	text-align: left;
 	float: left;
 	width: 50%;
 }
@@ -16,52 +65,8 @@
 	width: 50%;
 }
 
-input {
-	width: 100%;
-	outline: none;
-	border-width: 0;
-	border-width: 0 0 0px;
-}
-
 #combobox {
 	width: 10px;
 	height: 5px;
 }
 
-table.type01 {
-	border-style: solid;
-	border-color: black;
-	border-width: 2px;
-	border-collapse: collapse;
-	text-align: left;
-	line-height: 1.5;
-	margin: 20px 10px;
-	white-space: pre;
-	border-collapse: collapse;
-}
-
-table.type01 th {
-	text-align: center;
-	background-color: lightgray;
-	width: 150px;
-	padding: 10px;
-	font-weight: bold;
-	vertical-align: top;
-	border: 1px solid #ccc;
-	width: 150px;
-}
-
-table.type01 td {
-	width: 350px;
-	padding: 10px;
-	vertical-align: top;
-	border: 1px solid #ccc;
-}
-
-#data-table tr:nth-child(2n+3) {
-	background-color: #E1E1E1;
-}
-
-#search-table tr:nth-child(2n) {
-	background-color: #E1E1E1;
-}

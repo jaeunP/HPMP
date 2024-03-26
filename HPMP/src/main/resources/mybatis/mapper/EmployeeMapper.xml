@@ -62,7 +62,7 @@
 		FROM
 			EMPLOYEE_PJU_MST
 		WHERE
-			EMPLOYEE_NO LIKE #{employeeNo}||'%'
+				EMPLOYEE_NO LIKE #{employeeNo}||'%'
 			AND EMPLOYEE_NM LIKE #{employeeNm}||'%'
 			AND EMAIL LIKE #{email}||'%'
 			AND ENTR_DT LIKE #{entrDt}||'%'
@@ -108,12 +108,11 @@
 			UPDATE 
 				EMPLOYEE_PJU_MST 
 			SET	
-				DEL_YN  = 'Y',
-				MOD_DTM  = TO_CHAR(SYSDATE,'YYYYMMDDHH24MISS')
+				DEL_YN = 'Y',
+				MOD_DTM = TO_CHAR(SYSDATE,'YYYYMMDDHH24MISS')
 			WHERE
 				EMPLOYEE_NO  = #{employee.employeeNo}
 		</foreach>
-
 	</update>
 		
 </mapper>

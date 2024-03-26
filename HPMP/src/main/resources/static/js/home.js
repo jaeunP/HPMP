@@ -1,62 +1,49 @@
-//신규 버튼 클릭시 열 생성
-$(function() {
-	$('#insert-btn').click(function(){
-		$('#insert-row').show();
-
-	})	
-})
-
 //직원 목록 전체 조회
 $(function() {
-	let employeeLists = new Vue({
-		el : "#employees",
+	let employeeList = new Vue({
+		el : "#employee-list",
 		data : {
-			employeeList : {}
+			employee : {}
 		}
 	})
 	$.ajax({
 		type : "GET",
 		url : "api/employeeList",
 		success : function(response) {
-			console.dir(response);
-			employeeLists.employeeList = response;
+			employeeList.employee = response;
 		}
 	})
 })
 
 //직원 검색
 $(function(){
-	$('#search-btn').click(function (){
-		let entrDt = $('#search-entr-dt').val();
-		let entrDtFormat = entrDt.replace(/\-/g,'');
-		
-		let SearchEmployeeLists = new Vue({
+	let searchEmployeeLists = new Vue({
 		el : "#SearchEmployees",
 		data : {
 			SearchEmployeeList : {}
 		}
-	})	
+	})
+	$('#search-btn').click(function (){
+		let entrDt = $('#search-entr-dt').val().replace(/\-/g,'');
+		
 		let hpNo = $('#search-hp-no').val();
-		if(hpNo == ''){
-			hpNo = null;
-		}
 		let wrkTypCd = $('#search-wrk-typ-cd').val();
 		
+		if(hpNo == ''){
+			hpNo = null;
+		}		
 		if(wrkTypCd == ''){
 			wrkTypCd = null;
 		}
-		
 		
 		let employee = {
 			employeeNo: $('#search-employee-no').val(),
 			employeeNm: $('#search-employee-nm').val(),
 			hpNo: hpNo,
-			entrDt: entrDtFormat,
+			entrDt: entrDt,
 			wrkTypCd: wrkTypCd,
 			delYn: $('#search-del-yn').val()
-			};
-			let copiedList = Object.assign({}, SearchEmployeeLists);
-			
+			};	
 			$.ajax({
 				type: "POST",
 				url: "api/searchResult",
@@ -65,49 +52,45 @@ $(function(){
 				success : function(response) {
 					$('#data-table').hide();
 					$('#search-table').show();
-					console.dir(response);
-					SearchEmployeeLists.$forceUpdate();
-					SearchEmployeeLists.SearchEmployeeList = response;
-					SearchEmployeeLists.$forceUpdate();
-					//SearchEmployeeLists.SearchemployeeList.splice(0, response);
+					searchEmployeeLists.SearchEmployeeList = response;
 					alert("검색되었습니다.");
-
-
 			}
 		})
 	})
 })
 
-
-
 //직원 등록
 $(function(){
 	$('#save-btn').click(function (){
-		let entrDt = $('#entr-dt').val();
-		let entrDtFormat = entrDt.replace(/\-/g,'');
+		let entrDt = $('#entr-dt').val().replace(/\-/g,'');		
 		
-		let retrDt = $('#retr-dt').val();
-		let retrDtFormat = retrDt.replace(/\-/g,'');
+		let retrDt = $('#retr-dt').val().replace(/\-/g,'');
 		
-		let birthDt = $('#birth-dt').val();
-		let birthDtFormat = birthDt.replace(/\-/g,'');
-		
+		let birthDt = $('#birth-dt').val().replace(/\-/g,'');
+			
 		let employee = {
 			employeeNm: $('#employee-nm').val(),
 			hpNo: $('#hp-no').val(),
 			email: $('#email').val(),
-			entrDt: entrDtFormat,
-			retrDt: retrDtFormat,
+			entrDt: entrDt,
+			rankNm: $('#rank-nm').val(),
+			pstnNm: $('#pstn-nm').val(),
 			wrkTypCd: $('#wrk-typ-cd').val(),
+			retrDt: retrDt,
 			baseAdr: $('#base-adr').val(),
 			dtlAdr: $('#dtl-adr').val(),
 			zipNo: $('#zip-no').val(),
-			birthDt: birthDtFormat,
-			rankNm: $('#rank-nm').val(),
-			pstnNm: $('#pstn-nm').val(),
+			birthDt: birthDt,
 			regId: $('#reg-id').val(),
 			modId: $('#mod-id').val()
 			};
+			
+			if($.validationData(employee) == false){
+				console.log
+				return 0;
+			}
+			
+			
 			$.ajax({
 				type: "POST",
 				url: "/api/employee",
@@ -121,23 +104,28 @@ $(function(){
 	})
 })
 
-//삭제 버튼 클릭 이벤트
+//직원 삭제
 $(function() {
 	$('#delete-btn').click(function(){
 		$('#save-btn').hide();
 		$('#patch-save-btn').show();
+		$('.dynamic-table td').css("cursor","pointer");
 		
 		const employeeNoSet = new Set();
 		
 		$('#data-table tr').unbind("click").bind("click",function() {
-			$(this).css("background-color", "#FF9090");
+			$(this).addClass("delete-click");
 			
 			var clickTdAll = $(this).text().split(" ");
 			var clickEmployeeNo = clickTdAll[0];
 			
-			employeeNoSet.add(clickEmployeeNo);	
+			if(employeeNoSet.has(clickEmployeeNo)){
+				employeeNoSet.delete(clickEmployeeNo);
+				$(this).removeClass("delete-click");
+			} else{
+				employeeNoSet.add(clickEmployeeNo);	
+			}			
 		})
-
 		$('#patch-save-btn').click(function () {
 			var employeeNoArr = Array.from(employeeNoSet);
 			var employee = new Array();
@@ -163,6 +151,42 @@ $(function() {
 	})
 })
 
+$.validationData =(function(employee) {
+	let values = Object.values(employee);
+	let valid = false;
+	switch("") {
+		case values[0]:
+			alert("이름은 필수 값이 입니다.");
+			break;
+		case values[2]:
+			alert("이메일은 필수 값이 입니다.");
+			break;
+		case values[3]:
+			alert("입사일자는 필수 값이 입니다.");
+			break;
+		case values[4]:
+			alert("직급은 필수 값이 입니다.");
+			break;
+		case values[12]:
+			alert("등록자는 필수 값이 입니다.");
+			break;
+		case values[13]:
+			alert("수정자는 필수 값이 입니다.");
+			break;	
+		default:
+			valid = true;
+	}
+	return valid;
+})
+
+//신규 버튼 클릭시 열 생성
+$(function() {
+	$('#insert-btn').click(function(){
+		$('.insert-row').show();
+	})	
+})
+
+//input 문자열 입력 제한
 $(document).on('keyup', '#employee-nm', function() {
     $(this).val($(this).val().replace(/[^ㄱ-ㅎ가-힣a-zA-Z]/g, ''));
 });

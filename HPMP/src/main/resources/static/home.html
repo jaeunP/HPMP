@@ -3,11 +3,13 @@
 <head>
 <meta charset="UTF-8">
 
-<link rel="stylesheet" href="css/home.css?after" />
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<link rel="stylesheet" href="css/home.css" />
+<!-- <script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> -->
+
+<script src="js/jquery-3.7.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/vue@2.6.0"></script>
-<script src="./js/home.js"></script>
+<script src="js/home.js"></script>
 
 <title>인사관리</title>
 
@@ -15,11 +17,7 @@
 <body>
 	<div id="header">
 		<div id="header-left">
-			<table>
-				<tr>
-					<td><h3>직원관리</h3></td>
-				</tr>
-			</table>
+			<h3>직원관리</h3>
 		</div>
 
 		<div id="header-right">
@@ -31,55 +29,56 @@
 		</div>
 
 	</div>
+
 	<div id="search-div">
 		<table class="type01">
 			<tr class="gray">
 				<th>직원번호</th>
 				<td><input type="text" id="search-employee-no"></td>
-				
+
 				<th>직원이름</th>
 				<td><input type="text" id="search-employee-nm"></td>
-				
+
 				<th>휴대폰번호</th>
 				<td><input type="text" id="search-hp-no"></td>
-				
+
 				<th>입사일자</th>
 				<td><input type="date" id="search-entr-dt"></td>
-				
+
 			</tr>
 			<tr>
 				<th>근무형태</th>
 				<td><select name="language" id="search-wrk-typ-cd">
-							<option value="">=== 선택 ===</option>
-							<option value="EC1">EC1 : 본사출근</option>
-							<option value="EC2">EC2 : 휴가</option>
-							<option value="EC3">EC3 : 파견</option>
+						<option value="">=== 선택 ===</option>
+						<option value="EC1">EC1 : 본사출근</option>
+						<option value="EC2">EC2 : 휴가</option>
+						<option value="EC3">EC3 : 파견</option>
 				</select></td>
-				
+
 				<th>삭제여부</th>
 				<td><select name="language" id="search-del-yn">
-							<option value="">=== 선택 ===</option>
-							<option value="Y">Y</option>
-							<option value="N">N</option>
+						<option value="">=== 선택 ===</option>
+						<option value="Y">Y</option>
+						<option value="N">N</option>
 				</select></td>
-				
+
 				<th></th>
 				<td></td>
-				
+
 				<th></th>
 				<td></td>
 			</tr>
 		</table>
 	</div>
 
-	<div>
-		<h3>직원 목록</h3>
-	</div>
-	<div>
-		<table class="type01" id="data-table">
+	<h3>직원 목록</h3>
+
+	<div id="employee-list-div">
+		<table class="type01 dynamic-table" id="data-table">
 			<thead>
 				<tr>
 					<th>No</th>
+					<th>직원번호</th>
 					<th>이름</th>
 					<th>휴대폰 번호</th>
 					<th>이메일</th>
@@ -98,8 +97,9 @@
 					<th>수정일시</th>
 				</tr>
 			</thead>
-			<tbody id="employees">
-				<tr id="insert-row" style="display: none;">
+			<tbody id="employee-list">
+				<tr class="insert-row" style="display: none; background-color: #FFF !important;">
+					<td></td>
 					<td></td>
 					<td><input type="text" id="employee-nm"></td>
 					<td><input type="text" id="hp-no"></td>
@@ -119,11 +119,12 @@
 					<td><input type="text" id="zip-no"></td>
 					<td><input type="date" id="birth-dt"></td>
 					<td><input type="text" id="reg-id"></td>
-					<td>  </td>
+					<td></td>
 					<td><input type="text" id="mod-id"></td>
-					<td>  </td>
+					<td></td>
 				</tr>
-				<tr class="gray" v-for="index in employeeList">
+				<tr class="gray" v-for="index in employee">
+					<td></td>
 					<td class="employee-no">{{index.employeeNo}}</td>
 					<td class="employee-nm">{{index.employeeNm}}</td>
 					<td class="hp-no">{{index.hpNo}}</td>
@@ -144,8 +145,9 @@
 			</tbody>
 		</table>
 	</div>
+
 	<div>
-		<table class="type01" id="search-table" style="display: none;">
+		<table class="type01 dynamic-table" id="search-table" style="display: none; background-color: #FFF !important">
 			<thead>
 				<tr>
 					<th>No</th>
@@ -168,6 +170,30 @@
 				</tr>
 			</thead>
 			<tbody id="SearchEmployees">
+				<tr class="insert-row" style="display: none;">
+					<td></td>
+					<td><input type="text" id="employee-nm"></td>
+					<td><input type="text" id="hp-no"></td>
+					<td><input type="text" id="email"></td>
+					<td><input type="date" id="entr-dt"></td>
+					<td><input type="text" id="rank-nm"></td>
+					<td><input type="text" id="pstn-nm"></td>
+					<td><select name="language" id="wrk-typ-cd">
+							<option value="">=== 선택 ===</option>
+							<option value="EC1">EC1 : 본사출근</option>
+							<option value="EC2">EC2 : 휴가</option>
+							<option value="EC3">EC3 : 파견</option>
+					</select></td>
+					<td><input type="date" id="retr-dt"></td>
+					<td><input type="text" id="base-adr"></td>
+					<td><input type="text" id="dtl-adr"></td>
+					<td><input type="text" id="zip-no"></td>
+					<td><input type="date" id="birth-dt"></td>
+					<td><input type="text" id="reg-id"></td>
+					<td></td>
+					<td><input type="text" id="mod-id"></td>
+					<td></td>
+				</tr>
 				<tr class="gray" v-for="index in SearchEmployeeList">
 					<td class="employee-no">{{index.employeeNo}}</td>
 					<td class="employee-nm">{{index.employeeNm}}</td>
@@ -190,5 +216,7 @@
 		</table>
 	</div>
 </body>
-
+<footer>
+	<div id="paging"></div>
+</footer>
 </html>

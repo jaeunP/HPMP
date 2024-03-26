@@ -27,7 +27,6 @@ public class EmployeeService {
 	@Transactional
 	public void insertEmployee(EmployeeDto employeeDto) {
 		employeeMapper.insertEmployee(employeeDto);
-		
 	}
 	
 	
