@@ -1,19 +1,143 @@
 //직원 목록 전체 조회
-$(function() {
+/*$(function() {
 	let employeeList = new Vue({
 		el : "#employee-list",
 		data : {
 			employee : {}
 		}
 	})
+	
+	let pageNo = 0;
 	$.ajax({
 		type : "GET",
-		url : "api/employeeList",
+		url : "api/employeeList?page=" + pageNo,
 		success : function(response) {
-			employeeList.employee = response;
+			console.log(response.totalElements)
+			console.log(response.totalPages);			
+			employeeList.employee = response.content;
 		}
 	})
 })
+*/
+	let totalData;
+	let dataPerPages;
+	let globalCurrentPage;
+	let pageCount = 10;
+	let dataList;
+	let pageNo = 0;
+	
+	
+$(function() {
+	let employeeList = new Vue({
+		el : "#employee-list",
+		data : {
+		employee : {}
+		}
+	});
+	$.ajax({
+		type : "GET",
+		url : "api/employeeList?page=" + globalCurrentPage,
+		success : function(response) {
+			totalData = response.totalElements;
+			totalpages = response.totalPages;
+			dataPerPages = response.size;
+			dataList = response.content;
+			console.log(totalData);
+			console.log(totalpages);	
+			console.log(dataPerPages);	
+			console.log("dataList:" +dataList);
+			employeeList.employee = dataList;
+			
+			paging(totalData, dataPerPages, pageCount, 1);
+		}
+	})
+
+})
+
+
+function getList(CurrentPage){
+	let employeeLists = new Vue({
+	el : "#employee-list",
+	data : {
+		employee : {}
+		}
+	})
+		$.ajax({
+		type : "GET",
+		url : "api/employeeList?page=" + CurrentPage,
+		success : function(response) {
+			totalData = response.totalElements;
+			totalpages = response.totalPages;
+			dataPerPages = response.size;
+			dataList = response.content;
+			console.log(totalData);
+			console.log(totalpages);	
+			console.log(dataPerPages);	
+			console.log("dataList:" +dataList);
+			employeeLists.employee = dataList;
+		}
+	})
+}
+
+function paging(totalData, dataPerPage, pageCount, currentPage) {
+	
+  console.log("currentPage : " + currentPage);
+
+  totalPage = Math.ceil(totalData / dataPerPage); //총 페이지 수
+  
+  if(totalPage<pageCount){
+    pageCount=totalPage;
+  }
+  
+  let pageGroup = Math.ceil(currentPage / pageCount); // 페이지 그룹
+  let last = pageGroup * pageCount; //화면에 보여질 마지막 페이지 번호
+  
+  if (last > totalPage) {
+    last = totalPage;
+  }
+
+  let first = last - (pageCount - 1); //화면에 보여질 첫번째 페이지 번호
+  let next = last + 1;
+  let prev = first - 1;
+
+  let pageHtml = "";
+
+  if (prev > 0) {
+    pageHtml += "<li><a href='#' id='prev'> 이전 </a></li>";
+  }
+
+ //페이징 번호 표시 
+  for (var i = first; i <= last; i++) {
+    if (currentPage == i) {
+      pageHtml +=
+        "<li class='on'><a href='#' id='" + i + "'>" + i + "</a></li>";
+    } else {
+      pageHtml += "<li><a href='#' id='" + i + "'>" + i + "</a></li>";
+    }
+  }
+
+  if (last < totalPage) {
+    pageHtml += "<li><a href='#' id='next'> 다음 </a></li>";
+  }
+  $("#pagingul").html(pageHtml);
+
+  //페이징 번호 클릭 이벤트 
+  $("#pagingul li a").click(function () {
+    let $id = $(this).attr("id");
+    selectedPage = $(this).text();
+
+    if ($id == "next") selectedPage = next;
+    if ($id == "prev") selectedPage = prev;
+    
+    //전역변수에 선택한 페이지 번호를 담는다...
+    globalCurrentPage = selectedPage-1;
+    //페이징 표시 재호출
+    paging(totalData, dataPerPage, pageCount, selectedPage);
+/*    //글 목록 표시 재호출
+    displayData(selectedPage, dataPerPage);*/
+    getList(globalCurrentPage);
+  });
+}
 
 //직원 검색
 $(function(){
@@ -204,3 +328,5 @@ $(document).on('keyup', '#zip-no', function() {
 $(document).on('keyup', '#search-hp-no', function() {
     $(this).val($(this).val().replace(/[^0-9]/g, ''));
 });
+
+

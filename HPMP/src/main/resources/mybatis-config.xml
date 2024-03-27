@@ -13,5 +13,6 @@
 
 	<typeAliases>
 		<typeAlias type="com.HPMP.domain.employee.EmployeeDto" alias="EmployeeDto" />
+		<typeAlias type="com.HPMP.common.RequestList" alias="RequestList" />
 	</typeAliases>
 </configuration>

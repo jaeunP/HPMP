@@ -44,7 +44,18 @@
 		TO_CHAR(TO_DATE(MOD_DTM, 'YYYY-MM-DD HH24:MI:SS'), 'YYYY-MM-DD HH24:MI:SS') AS "MOD_DTM"
 	</sql>
 
-	<select id="getEmployeeList" resultType="EmployeeDto">
+<!-- 	<select id="getEmployeeList" resultType="EmployeeDto">
+		SELECT
+			<include refid="viewemployeeColumns"/>
+		FROM
+			EMPLOYEE_PJU_MST
+		WHERE 
+			DEL_YN = 'N'
+		ORDER BY
+			EMPLOYEE_NO DESC	
+	</select> -->
+	
+	<select id="getEmployeeList" parameterType="RequestList" resultType="EmployeeDto">
 		SELECT
 			<include refid="viewemployeeColumns"/>
 		FROM
@@ -53,6 +64,7 @@
 			DEL_YN = 'N'
 		ORDER BY
 			EMPLOYEE_NO DESC
+		OFFSET #{pageable.offset} ROWS FETCH NEXT #{pageable.pageSize} ROWS ONLY
 			
 	</select>
 	
@@ -114,6 +126,15 @@
 				EMPLOYEE_NO  = #{employee.employeeNo}
 		</foreach>
 	</update>
+	
+	<select id="countList" resultType="int">
+		SELECT 
+			COUNT(*) AS count_list
+		FROM
+			EMPLOYEE_PJU_MST
+		WHERE
+			DEL_YN = 'N'	
+	</select>
 		
 </mapper>
 

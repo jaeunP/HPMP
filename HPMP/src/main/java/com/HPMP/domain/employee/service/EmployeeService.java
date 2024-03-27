@@ -2,9 +2,13 @@ package com.HPMP.domain.employee.service;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.HPMP.common.RequestList;
 import com.HPMP.domain.employee.EmployeeDto;
 import com.HPMP.domain.employee.mapper.EmployeeMapper;
 
@@ -16,9 +20,23 @@ public class EmployeeService {
 	
 	private final EmployeeMapper employeeMapper;
 	
-	public List<EmployeeDto> getEmployeeList(){
-		return employeeMapper.getEmployeeList();
+//	public List<EmployeeDto> getEmployeeList(){
+//		return employeeMapper.getEmployeeList();
+//	}
+	
+	public Page<EmployeeDto> getEmployeeList(Pageable pageable){		
+				
+		RequestList<?> requestList = RequestList.builder()
+				.pageable(pageable)
+				.build();
+		
+		List<EmployeeDto> employeeList = employeeMapper.getEmployeeList(requestList);
+		int total = employeeMapper.countList();
+		
+		return new PageImpl<EmployeeDto>(employeeList, pageable, total);
+		
 	}
+	
 	
 	public List<EmployeeDto> searchEmployee(EmployeeDto employeeDto) {
 		return employeeMapper.searchEmployee(employeeDto);
@@ -35,6 +53,10 @@ public class EmployeeService {
 		int deleteCnt = employeeMapper.deleteEmployeeAtView(employeeNo);
 		
 		return deleteCnt;
+	}
+	
+	public int countList() {
+		return employeeMapper.countList();
 	}
 	
 }
