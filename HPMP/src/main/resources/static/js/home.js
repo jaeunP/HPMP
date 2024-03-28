@@ -20,7 +20,8 @@
 })
 */
 	
-	let dataList;
+let dataList;	//ajax로 받은 데이터 리스트
+let searchDataList;	//ajax로 받은 검색 데이터 리스트
 	
 $(function() {
 	let employeeList = new Vue({
@@ -30,11 +31,6 @@ $(function() {
 		}
 	});
 	
-	let totalData;
-	let dataPerPages;
-	let globalCurrentPage;
-	let pageCount = 10;
-	
 	console.log(JSON.stringify(employeeList.employee));
 	
 	$('#pagingul').click(function(){
@@ -42,9 +38,7 @@ $(function() {
 			console.log("클릭 이벤트 실행")
 		employeeList.employee = dataList;
 		}, 80)
-		
 	})
-	
 	
 	if(dataList == undefined){		
 		$.ajax({
@@ -61,16 +55,15 @@ $(function() {
 				console.log("dataList***:" + JSON.stringify(dataList));
 				employeeList.employee = dataList;
 				
-				
-				paging(totalData, 1, pageCount, 1, employeeList.employee);
+				paging(totalData, dataPerPages, 10, 1, employeeList.employee);
 			}
 		})
 	}	
 })
 
-function getList(selectedPage, employeeList) {
-	let page =selectedPage-1
-	vue = employeeList.employee;
+function getList(selectedPage) {
+	let page = selectedPage-1
+	
 	$.ajax({
 		type : "GET",
 		url : "api/employeeList?page=" + page,
@@ -202,7 +195,7 @@ function paging(totalData, dataPerPage, pageCount, currentPage, employeeList) {
     //페이징 표시 재호출
     paging(totalData, dataPerPage, pageCount, selectedPage, employeeList);
     
-    getList(selectedPage, employeeList);
+    getList(selectedPage);
   });
 }
 
