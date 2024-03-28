@@ -34,7 +34,7 @@ public class EmployeeApiController {
 //	}
 	
 	@GetMapping("/employeeList")
-	public ResponseEntity<?> employeeList(@PageableDefault(size = 10) Pageable pageable) {
+	public ResponseEntity<?> employeeList(@PageableDefault(size = 1) Pageable pageable) {
 		
 		return ResponseEntity.ok(employeeService.getEmployeeList(pageable));
 	}

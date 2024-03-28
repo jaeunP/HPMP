@@ -19,13 +19,8 @@
 	})
 })
 */
-	let totalData;
-	let dataPerPages;
-	let globalCurrentPage;
-	let pageCount = 10;
-	let dataList;
-	let pageNo = 0;
 	
+	let dataList;
 	
 $(function() {
 	let employeeList = new Vue({
@@ -34,52 +29,66 @@ $(function() {
 		employee : {}
 		}
 	});
-	$.ajax({
-		type : "GET",
-		url : "api/employeeList?page=" + globalCurrentPage,
-		success : function(response) {
-			totalData = response.totalElements;
-			totalpages = response.totalPages;
-			dataPerPages = response.size;
-			dataList = response.content;
-			console.log(totalData);
-			console.log(totalpages);	
-			console.log(dataPerPages);	
-			console.log("dataList:" +dataList);
-			employeeList.employee = dataList;
-			
-			paging(totalData, dataPerPages, pageCount, 1);
-		}
+	
+	let totalData;
+	let dataPerPages;
+	let globalCurrentPage;
+	let pageCount = 10;
+	
+	console.log(JSON.stringify(employeeList.employee));
+	
+	$('#pagingul').click(function(){
+		setTimeout(function(){
+			console.log("클릭 이벤트 실행")
+		employeeList.employee = dataList;
+		}, 80)
+		
 	})
-
+	
+	
+	if(dataList == undefined){		
+		$.ajax({
+			type : "GET",
+			url : "api/employeeList?page=0",
+			success : function(response) {
+				totalData = response.totalElements;
+				totalpages = response.totalPages;
+				dataPerPages = response.size;
+				dataList = response.content;
+				console.log(totalData);
+				console.log(totalpages);	
+				console.log(dataPerPages);	
+				console.log("dataList***:" + JSON.stringify(dataList));
+				employeeList.employee = dataList;
+				
+				
+				paging(totalData, 1, pageCount, 1, employeeList.employee);
+			}
+		})
+	}	
 })
 
-
-function getList(CurrentPage){
-	let employeeLists = new Vue({
-	el : "#employee-list",
-	data : {
-		employee : {}
-		}
-	})
-		$.ajax({
+function getList(selectedPage, employeeList) {
+	let page =selectedPage-1
+	vue = employeeList.employee;
+	$.ajax({
 		type : "GET",
-		url : "api/employeeList?page=" + CurrentPage,
+		url : "api/employeeList?page=" + page,
 		success : function(response) {
 			totalData = response.totalElements;
 			totalpages = response.totalPages;
 			dataPerPages = response.size;
 			dataList = response.content;
-			console.log(totalData);
-			console.log(totalpages);	
-			console.log(dataPerPages);	
-			console.log("dataList:" +dataList);
-			employeeLists.employee = dataList;
+			vue = dataList;
+			console.log("getList - dataList:" + JSON.stringify(dataList));
+			
 		}
 	})
 }
 
-function paging(totalData, dataPerPage, pageCount, currentPage) {
+
+
+/*function paging(totalData, dataPerPage, pageCount, currentPage) {
 	
   console.log("currentPage : " + currentPage);
 
@@ -133,9 +142,67 @@ function paging(totalData, dataPerPage, pageCount, currentPage) {
     globalCurrentPage = selectedPage-1;
     //페이징 표시 재호출
     paging(totalData, dataPerPage, pageCount, selectedPage);
-/*    //글 목록 표시 재호출
-    displayData(selectedPage, dataPerPage);*/
+    //글 목록 표시 재호출
+    displayData(selectedPage, dataPerPage);
     getList(globalCurrentPage);
+  });
+}*/
+function paging(totalData, dataPerPage, pageCount, currentPage, employeeList) {
+	
+  console.log("currentPage : " + currentPage);
+
+  totalPage = Math.ceil(totalData / dataPerPage); //총 페이지 수
+  
+  if(totalPage<pageCount){
+    pageCount=totalPage;
+  }
+  
+  let pageGroup = Math.ceil(currentPage / pageCount); // 페이지 그룹
+  let last = pageGroup * pageCount; //화면에 보여질 마지막 페이지 번호
+  
+  if (last > totalPage) {
+    last = totalPage;
+  }
+
+  let first = last - (pageCount - 1); //화면에 보여질 첫번째 페이지 번호
+  let next = last + 1;
+  let prev = first - 1;
+
+  let pageHtml = "";
+
+  if (prev > 0) {
+    pageHtml += "<li><a href='#' id='prev'> 이전 </a></li>";
+  }
+
+ //페이징 번호 표시 
+  for (var i = first; i <= last; i++) {
+    if (currentPage == i) {
+      pageHtml +=
+        "<li class='on'><a href='#' class='page' id='" + i + "'>" + i + "</a></li>";
+    } else {
+      pageHtml += "<li><a href='#' class='page' id='" + i + "'>" + i + "</a></li>";
+    }
+  }
+
+  if (last < totalPage) {
+    pageHtml += "<li><a href='#' id='next'> 다음 </a></li>";
+  }
+  $("#pagingul").html(pageHtml);
+
+  //페이징 번호 클릭 이벤트 
+  $("#pagingul li a").click(function () {
+    let $id = $(this).attr("id");
+    selectedPage = $(this).text();
+
+    if ($id == "next") selectedPage = next;
+    if ($id == "prev") selectedPage = prev;
+    
+    
+	
+    //페이징 표시 재호출
+    paging(totalData, dataPerPage, pageCount, selectedPage, employeeList);
+    
+    getList(selectedPage, employeeList);
   });
 }
 
@@ -160,7 +227,7 @@ $(function(){
 			wrkTypCd = null;
 		}
 		
-		let employee = {
+		let Searchemployee = {
 			employeeNo: $('#search-employee-no').val(),
 			employeeNm: $('#search-employee-nm').val(),
 			hpNo: hpNo,
@@ -171,7 +238,7 @@ $(function(){
 			$.ajax({
 				type: "POST",
 				url: "api/searchResult",
-				data: JSON.stringify(employee),
+				data: JSON.stringify(Searchemployee),
 				contentType: "application/json",
 				success : function(response) {
 					$('#data-table').hide();
@@ -328,5 +395,3 @@ $(document).on('keyup', '#zip-no', function() {
 $(document).on('keyup', '#search-hp-no', function() {
     $(this).val($(this).val().replace(/[^0-9]/g, ''));
 });
-
-
