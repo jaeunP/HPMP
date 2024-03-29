@@ -4,9 +4,6 @@
 <meta charset="UTF-8">
 
 <link rel="stylesheet" href="css/home.css" />
-<!-- <script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> -->
-
 <script src="js/jquery-3.7.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/vue@2.6.0"></script>
 <script src="js/home.js"></script>
@@ -77,8 +74,7 @@
 		<table class="type01 dynamic-table" id="data-table">
 			<thead>
 				<tr>
-					<th>No</th>
-					<th>직원번호</th>
+					<th>사번</th>
 					<th>이름</th>
 					<th>휴대폰 번호</th>
 					<th>이메일</th>
@@ -99,7 +95,6 @@
 			</thead>
 			<tbody id="employee-list">
 				<tr class="insert-row" style="display: none; background-color: #FFF !important;">
-					<td></td>
 					<td></td>
 					<td><input type="text" id="employee-nm"></td>
 					<td><input type="text" id="hp-no"></td>
@@ -124,7 +119,6 @@
 					<td></td>
 				</tr>
 				<tr class="gray" v-for="index in employee">
-					<td></td>
 					<td class="employee-no">{{index.employeeNo}}</td>
 					<td class="employee-nm">{{index.employeeNm}}</td>
 					<td class="hp-no">{{index.hpNo}}</td>
@@ -146,11 +140,11 @@
 		</table>
 	</div>
 
-	<div>
+	<div id="search-result-div">
 		<table class="type01 dynamic-table" id="search-table" style="display: none; background-color: #FFF !important">
 			<thead>
 				<tr>
-					<th>No</th>
+					<th>사번</th>
 					<th>이름</th>
 					<th>휴대폰 번호</th>
 					<th>이메일</th>
@@ -169,7 +163,7 @@
 					<th>수정일시</th>
 				</tr>
 			</thead>
-			<tbody id="SearchEmployees">
+			<tbody id="searchEmployee">
 				<tr class="insert-row" style="display: none;">
 					<td></td>
 					<td><input type="text" id="employee-nm"></td>
@@ -194,7 +188,7 @@
 					<td><input type="text" id="mod-id"></td>
 					<td></td>
 				</tr>
-				<tr class="gray" v-for="index in SearchEmployeeList">
+				<tr class="gray" v-for="index in searchEmployee">
 					<td class="employee-no">{{index.employeeNo}}</td>
 					<td class="employee-nm">{{index.employeeNm}}</td>
 					<td class="hp-no">{{index.hpNo}}</td>
@@ -218,6 +212,5 @@
 </body>
 <footer>
 	<ul id="pagingul"></ul>
-	<input type="text" id="page-number" style="display: none;">
 </footer>
 </html>

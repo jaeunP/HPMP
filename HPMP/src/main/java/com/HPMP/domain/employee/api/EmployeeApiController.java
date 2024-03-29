@@ -2,6 +2,7 @@ package com.HPMP.domain.employee.api;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
@@ -26,22 +27,15 @@ public class EmployeeApiController {
 
 	private final EmployeeService employeeService;
 
-//	@GetMapping("/employeeList")
-//	public ResponseEntity<List<EmployeeDto>> employeeList() {
-//		List<EmployeeDto> employeeList = employeeService.getEmployeeList();
-//		
-//		return ResponseEntity.ok(employeeList);
-//	}
-	
 	@GetMapping("/employeeList")
-	public ResponseEntity<?> employeeList(@PageableDefault(size = 1) Pageable pageable) {
+	public ResponseEntity<?> employeeList(@PageableDefault(size = 10) Pageable pageable) {
 		
 		return ResponseEntity.ok(employeeService.getEmployeeList(pageable));
 	}
 	
 	@PostMapping("/searchResult")
-	public ResponseEntity<List<EmployeeDto>>  searchEmployee(@RequestBody EmployeeDto employeeDto) {
-		List<EmployeeDto> searchEmployeeList = employeeService.searchEmployee(employeeDto);
+	public ResponseEntity<Page<EmployeeDto>>  searchEmployee(@RequestBody EmployeeDto employeeDto, @PageableDefault(size = 10) Pageable pageable) {
+		Page<EmployeeDto> searchEmployeeList = employeeService.searchEmployee(employeeDto, pageable);
 		
 		if (searchEmployeeList.isEmpty()) return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 			return ResponseEntity.ok(searchEmployeeList);
@@ -60,10 +54,5 @@ public class EmployeeApiController {
 		
 		if(delCnt != 0) return ResponseEntity.status(HttpStatus.OK).body(delCnt +"개의 데이터를 삭제했습니다.");
 		return ResponseEntity.status(HttpStatus.NO_CONTENT).body("삭제된 데이터가 없습니다");
-	}
-	
-	@GetMapping("/count")
-	public int countList() {
-		return employeeService.countList();
 	}
 }

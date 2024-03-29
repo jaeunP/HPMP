@@ -43,17 +43,6 @@
 		MOD_ID,
 		TO_CHAR(TO_DATE(MOD_DTM, 'YYYY-MM-DD HH24:MI:SS'), 'YYYY-MM-DD HH24:MI:SS') AS "MOD_DTM"
 	</sql>
-
-<!-- 	<select id="getEmployeeList" resultType="EmployeeDto">
-		SELECT
-			<include refid="viewemployeeColumns"/>
-		FROM
-			EMPLOYEE_PJU_MST
-		WHERE 
-			DEL_YN = 'N'
-		ORDER BY
-			EMPLOYEE_NO DESC	
-	</select> -->
 	
 	<select id="getEmployeeList" parameterType="RequestList" resultType="EmployeeDto">
 		SELECT
@@ -64,29 +53,29 @@
 			DEL_YN = 'N'
 		ORDER BY
 			EMPLOYEE_NO DESC
-		OFFSET #{pageable.offset} ROWS FETCH NEXT #{pageable.pageSize} ROWS ONLY
-			
+		OFFSET #{pageable.offset} ROWS FETCH NEXT #{pageable.pageSize} ROWS ONLY		
 	</select>
 	
-	<select id="searchEmployee" resultType="EmployeeDto" parameterType="EmployeeDto">
+	<select id="searchEmployee" resultType="EmployeeDto" parameterType="RequestList">
 		SELECT
 			<include refid="viewemployeeColumns"/>
 		FROM
 			EMPLOYEE_PJU_MST
 		WHERE
-				EMPLOYEE_NO LIKE #{employeeNo}||'%'
-			AND EMPLOYEE_NM LIKE #{employeeNm}||'%'
-			AND EMAIL LIKE #{email}||'%'
-			AND ENTR_DT LIKE #{entrDt}||'%'
-			AND DEL_YN LIKE #{delYn}||'%'
-			<if test="hpNo != null">
-				AND HP_NO LIKE #{hpNo}||'%'
+				EMPLOYEE_NO LIKE #{data.employeeNo}||'%'
+			AND EMPLOYEE_NM LIKE #{data.employeeNm}||'%'
+			AND EMAIL LIKE #{data.email}||'%'
+			AND ENTR_DT LIKE #{data.entrDt}||'%'
+			AND DEL_YN LIKE #{data.delYn}||'%'
+ 			<if test="data.hpNo != null">
+				AND HP_NO LIKE #{data.hpNo}||'%'
 			</if>
-			<if test="wrkTypCd != null">
-				AND WRK_TYP_CD LIKE #{wrkTypCd}||'%'
+			<if test="data.wrkTypCd != null">
+				AND WRK_TYP_CD LIKE #{data.wrkTypCd}||'%'
 			</if>
 		ORDER BY
 			EMPLOYEE_NO DESC
+		OFFSET #{pageable.offset} ROWS FETCH NEXT #{pageable.pageSize} ROWS ONLY
 	</select>
 	
 	<insert id="insertEmployee" parameterType="EmployeeDto">
@@ -134,6 +123,25 @@
 			EMPLOYEE_PJU_MST
 		WHERE
 			DEL_YN = 'N'	
+	</select>
+	
+	<select id="countSearchList" parameterType="EmployeeDto" resultType="int" >
+		SELECT 
+			COUNT(*) AS count_search_list
+		FROM
+			EMPLOYEE_PJU_MST
+		WHERE
+			EMPLOYEE_NO LIKE #{employeeNo}||'%'
+			AND EMPLOYEE_NM LIKE #{employeeNm}||'%'
+			AND EMAIL LIKE #{email}||'%'
+			AND ENTR_DT LIKE #{entrDt}||'%'
+			AND DEL_YN LIKE #{delYn}||'%'
+			<if test="hpNo != null">
+				AND HP_NO LIKE #{hpNo}||'%'
+			</if>
+			<if test="wrkTypCd != null">
+				AND WRK_TYP_CD LIKE #{wrkTypCd}||'%'
+			</if>
 	</select>
 		
 </mapper>

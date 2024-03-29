@@ -15,12 +15,15 @@ public interface EmployeeMapper {
 	public List<EmployeeDto> getEmployeeList(RequestList<?> requestList);
 	
 	
-	public List<EmployeeDto> searchEmployee(EmployeeDto employeeDto); 
+//	public List<EmployeeDto> searchEmployee(EmployeeDto employeeDto);
+	public List<EmployeeDto> searchEmployee(RequestList<?> requestList);
 	
 	public void insertEmployee(EmployeeDto employeeDto);
 	
 	public int deleteEmployeeAtView(List<EmployeeDto> employeeNo);
 	
 	public int countList();
+	
+	public int countSearchList(EmployeeDto employeeDto);
 	
 }

@@ -38,8 +38,20 @@ public class EmployeeService {
 	}
 	
 	
-	public List<EmployeeDto> searchEmployee(EmployeeDto employeeDto) {
-		return employeeMapper.searchEmployee(employeeDto);
+//	public List<EmployeeDto> searchEmployee(EmployeeDto employeeDto) {
+//		return employeeMapper.searchEmployee(employeeDto);
+//	}
+	
+	public Page<EmployeeDto> searchEmployee(EmployeeDto employeeDto, Pageable pageable) {
+		RequestList<?> requestList = RequestList.builder()
+				.data(employeeDto)
+				.pageable(pageable)
+				.build();
+		
+		List<EmployeeDto> searchEmployeeList = employeeMapper.searchEmployee(requestList);
+		int total = employeeMapper.countSearchList(employeeDto);
+			
+		return new PageImpl<EmployeeDto>(searchEmployeeList, pageable, total);
 	}
 	
 	@Transactional
@@ -47,16 +59,10 @@ public class EmployeeService {
 		employeeMapper.insertEmployee(employeeDto);
 	}
 	
-	
 	@Transactional
 	public int deleteEmployeeAtView(List<EmployeeDto> employeeNo) {
 		int deleteCnt = employeeMapper.deleteEmployeeAtView(employeeNo);
 		
 		return deleteCnt;
 	}
-	
-	public int countList() {
-		return employeeMapper.countList();
-	}
-	
 }
